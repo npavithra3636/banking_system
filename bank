@@ -1,0 +1,67 @@
+package project;
+
+import java.sql.*;
+
+class bk{
+	public void addrec(int cid,String cname,String cadd,String city,int pin,long phone,int indep) {
+		Connection con=null;
+		Statement smt=null;
+		try{
+			Class.forName("org.sqlite.JDBC");
+			con=DriverManager.getConnection("jdbc:sqlite:C:\\sql\\bank.db");
+			con.setAutoCommit(true);
+			System.out.println("database opened succusfully");
+			smt=con.createStatement();
+			String query="insert into banking values(?,?,?,?,?,?,?)";
+			PreparedStatement presmt=con.prepareStatement(query);
+			presmt.setInt(1,cid);
+			presmt.setString(2,cname);
+			presmt.setString(3,cadd);
+			presmt.setString(4,city);
+			presmt.setInt(5,pin);
+			presmt.setLong(6,phone);
+			presmt.setInt(7,indep);
+			
+			presmt.executeUpdate();
+			//con.commit();
+			presmt.close();
+			}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+			}
+			System.out.println("data base connected successfull");
+	}
+			
+}
+public class bankdb {
+     public void reportt(int cid,String cname,String caddress,String city,int pin,long phone,int incdep) {
+    	 bk r=new bk();
+    	 r.addrec(cid, cname, caddress, city, pin, phone, incdep);
+    	 }
+public class insertr {
+				public static void main(String[] args) {
+					Scanner sc=new Scanner(System.in);
+					System.out.println("enter customer id");
+					int cid=sc.nextInt();
+					System.out.println("enter customer name");
+					String cname=sc.next();
+					System.out.println("enter customer adress");
+					String cadd=sc.next();
+					System.out.println("enter customer city");
+					String city=sc.next();
+					System.out.println("enter customer pincode");
+					int cpin=sc.nextInt();
+					System.out.println("enter customer phone");
+					long cph=sc.nextLong();
+					System.out.println("enter customer initial deposite");
+					int cidep=sc.nextInt();
+					bankdb db=new bankdb();
+					db.reportt(cid,cname,cadd,city,cpin,cph,cidep);
+							
+							
+		}
+
+	}
+	
+
+}
